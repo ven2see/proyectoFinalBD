@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.border.TitledBorder;
 
+import SqlDB.LlenarLista;
 import logico.AlticeSystem;
 import logico.Cuenta;
 import logico.P_Administrador;
@@ -48,46 +49,16 @@ public class Login extends JFrame {
 	private JLabel labelVer;
 	private JLabel labelNover;
 	private JLabel labelFondo;
-	private JLabel lblNewLabel_3;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+	
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				FileInputStream altice;
-				FileOutputStream altice2;
-				ObjectInputStream alticeRead;
-				ObjectOutputStream alticeWrite;
-				try {
-					altice = new FileInputStream ("altice.dat");
-					alticeRead = new ObjectInputStream(altice);
-					AlticeSystem temp = (AlticeSystem)alticeRead.readObject();
-					AlticeSystem.setAltice(temp);
-					altice.close();
-					alticeRead.close();
-				} catch (FileNotFoundException e) {
-					try {
-						altice2 = new  FileOutputStream("altice.dat");
-						alticeWrite = new ObjectOutputStream(altice2);
-						Persona auxPersona = new P_Administrador("001-0000000-1", "Darwing", "Ernest", "Hombre", "Haitiana", "Villa Olga", "809-4790472", "Administrador", "P-1");
-						AlticeSystem.getInstance().insertarPersona(auxPersona);;
-						Cuenta cuenta = new Cuenta("1234", "Admin");
-						AlticeSystem.getInstance().addUser("001-0000000-1", cuenta);
-						alticeWrite.writeObject(AlticeSystem.getInstance());
-						altice2.close();
-						alticeWrite.close();
-					} catch (FileNotFoundException e1) {
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-					}
-				} catch (IOException e) {
-					
-					
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+		
+				LlenarLista listar = new LlenarLista();
+				listar.listar();
 				
 				try {
 					Login frame = new Login();

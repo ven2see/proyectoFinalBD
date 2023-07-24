@@ -210,6 +210,7 @@ public class RegistrarPersona extends JDialog {
 		cbxCargo.setModel(new DefaultComboBoxModel(new String[] {"<Selecciona>", "Administrador", "Trabajador"}));
 		cbxCargo.setSelectedIndex(0);
 		cbxCargo.setBounds(407, 91, 119, 22);
+		
 		if(auxPersona != null && auxPersona instanceof Cliente){
 			cbxCargo.setVisible(false);
 		}

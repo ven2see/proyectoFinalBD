@@ -110,15 +110,6 @@ public class Principal extends JFrame {
 	 */
 	public Principal() {
 		setTitle("Altice");
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				Guardar("altice.dat");
-			}
-		});
-
-
-
 		AlticeSystem.getInstance().generarFacturaPorFecha();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -227,7 +218,7 @@ public class Principal extends JFrame {
 		JButton btnCerrar = new JButton("Cerrar Sesion");
 		btnCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Guardar("altice.dat");
+				Guardar();
 				Login login = new Login();
 				dispose();
 				login.setVisible(true);
@@ -452,21 +443,8 @@ public class Principal extends JFrame {
 		labelPlanes.setText(String.valueOf(AlticeSystem.getInstance().getMisPlanes().size()));
 	}
 
-	public void Guardar(String nombre)
+	public void Guardar()
 	{
-		try {
-			FileOutputStream altice2;
-			ObjectOutputStream alticeWrite;
-			altice2 = new  FileOutputStream(nombre);
-			alticeWrite = new ObjectOutputStream(altice2);
-			alticeWrite.writeObject(AlticeSystem.getInstance());
-			alticeWrite.close();
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		
 	}
 }
