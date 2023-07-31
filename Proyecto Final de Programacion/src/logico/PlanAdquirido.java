@@ -17,7 +17,6 @@ public class PlanAdquirido implements Serializable{
 	private float pagoMensual;
 	private String switch1;
 	private String codigo;
-	
 	private boolean facGen;
 	private boolean PIniPend;
 	private boolean pagoPendiente;

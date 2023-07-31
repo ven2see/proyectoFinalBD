@@ -2,7 +2,7 @@ package logico;
 
 import java.awt.Component;
 import java.io.Serializable;
-import java.security.KeyStore.PasswordProtection;
+import java.security.*;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -217,17 +217,23 @@ public class AlticeSystem implements Serializable{
 		if(Persona != null && auxPersona instanceof P_Administrador) {
 			Persona.setTelefono(auxPersona.getTelefono());
 			Persona.setNombre(auxPersona.getNombre());
+			Persona.setSnombre(auxPersona.getSnombre());
 			Persona.setApellido(auxPersona.getApellido());
-			Persona.setNacionalidad(auxPersona.getNacionalidad());
+			Persona.setSapellido(auxPersona.getSapellido());
+//			Persona.setNacionalidad(auxPersona.getNacionalidad());
 			Persona.setDireccion(auxPersona.getDireccion());
+			Persona.setNumCasa(auxPersona.getNumCasa());
 			((P_Administrador) Persona).addCuenta(cuenta);
 		}
 		if(Persona != null && auxPersona instanceof P_Trabajador) {
 			Persona.setTelefono(auxPersona.getTelefono());
 			Persona.setNombre(auxPersona.getNombre());
+			Persona.setSnombre(auxPersona.getSnombre());
 			Persona.setApellido(auxPersona.getApellido());
-			Persona.setNacionalidad(auxPersona.getNacionalidad());
+			Persona.setSapellido(auxPersona.getSapellido());
+//			Persona.setNacionalidad(auxPersona.getNacionalidad());
 			Persona.setDireccion(auxPersona.getDireccion());
+			Persona.setNumCasa(auxPersona.getNumCasa());
 			((P_Trabajador) Persona).addCuenta(cuenta);
 		}
 	}
@@ -236,7 +242,7 @@ public class AlticeSystem implements Serializable{
 	public void pagarFac(Cliente cli, Factura fac) {
 		int ind = buscarIndexFactura(cli, fac.getCodigo());
 		if(fac!=null) { 
-			String contrasenia =JOptionPane.showInputDialog(PasswordProtection,"Favor confirmar su Contraseña");
+			String contrasenia =JOptionPane.showInputDialog(PasswordProtection,"Favor confirmar su Contraseï¿½a");
 			if(((P_Administrador)loginUser).getCuenta().getPassword().equals(contrasenia)) {
 				if(fac.getMiPlanAd().isPIniPend()) {
 					fac.getMiPlanAd().setPIniPend(false);
@@ -246,7 +252,7 @@ public class AlticeSystem implements Serializable{
 				fac.getMiPlanAd().setPagoPendiente(true);
 				JOptionPane.showMessageDialog(null, "Factura Pagada");
 			}else {
-				JOptionPane.showMessageDialog(null, "Contraseña incorrecta, intente de nuevo.");
+				JOptionPane.showMessageDialog(null, "Contraseï¿½a incorrecta, intente de nuevo.");
 			}
 		}
 	}
@@ -258,20 +264,20 @@ public class AlticeSystem implements Serializable{
 				if(((Cliente)auxPersona).getMisPlanesAd().size()>0) {
 					JOptionPane.showMessageDialog(null, "No se puede eliminar clientes con planes activado.", "Error!", JOptionPane.ERROR_MESSAGE);
 				}else {
-					String contrasenia =JOptionPane.showInputDialog(PasswordProtection,"Favor confirmar su Contraseña");
+					String contrasenia =JOptionPane.showInputDialog(PasswordProtection,"Favor confirmar su Contraseï¿½a");
 					if(((P_Administrador)loginUser).getCuenta().getPassword().equals(contrasenia)) {
 						misPersonas.remove(auxPersona);
 					}else {
-						JOptionPane.showMessageDialog(null, "Contraseña incorrecta, intente de nuevo.");
+						JOptionPane.showMessageDialog(null, "Contraseï¿½a incorrecta, intente de nuevo.");
 					}
 				}
 
 			}else {
-				String contrasenia =JOptionPane.showInputDialog(PasswordProtection,"Favor confirmar su Contraseña");
+				String contrasenia =JOptionPane.showInputDialog(PasswordProtection,"Favor confirmar su Contraseï¿½a");
 				if(((P_Administrador)loginUser).getCuenta().getPassword().equals(contrasenia)) {
 					misPersonas.remove(auxPersona);
 				}else {
-					JOptionPane.showMessageDialog(null, "Contraseña incorrecta, intente de nuevo.");
+					JOptionPane.showMessageDialog(null, "Contraseï¿½a incorrecta, intente de nuevo.");
 				}
 			}
 		}
@@ -329,7 +335,7 @@ public class AlticeSystem implements Serializable{
 		String tipo =null;
 
 		if(person instanceof P_Administrador) 
-			tipo = "Administrador";
+			tipo = "admin";
 
 
 		if(person instanceof P_Trabajador) 
@@ -346,7 +352,7 @@ public class AlticeSystem implements Serializable{
 
 			if(auxCliente instanceof Cliente && ((Cliente) auxCliente).getMisPlanesAd().size() > 0) {
 				if(!auxPlanAd.isPagoPendiente()) {
-					int resp = JOptionPane.showConfirmDialog(null, "¿Esta seguro?", "Alerta!", JOptionPane.YES_NO_OPTION);
+					int resp = JOptionPane.showConfirmDialog(null, "ï¿½Esta seguro?", "Alerta!", JOptionPane.YES_NO_OPTION);
 					if(resp!=1) { 
 						((Cliente) auxCliente).getMisPlanesAd().remove(auxPlanAd);
 						JOptionPane.showMessageDialog(null, "Plan "+ auxPlanAd.getCodigo()+ " ha sido eliminado correctamente");

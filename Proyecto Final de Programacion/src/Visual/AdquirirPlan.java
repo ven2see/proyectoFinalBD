@@ -60,19 +60,12 @@ public class AdquirirPlan extends JDialog {
 	private static DefaultTableModel model;
 	private static Object[] rows;
 	private JTextField txtApellido;
-	private JTextField txtNacionalidad;
 	private Plan auxPlan = null;
 	private Persona auxPersona = null;
 	private PlanAdquirido auxPlanAd = null;
 	private float precio = 0;
-	private JFormattedTextField txtTelefono;
 	private JComboBox cbxGenero;
 	private JTextField txtCodigo;
-	private JLabel labelNombre;
-	private JLabel labelApellido;
-	private JLabel labelTelefono;
-	private JLabel labelNacionalidad;
-	private JLabel labelDireccion;
 
 	/**
 	 * Launch the application.
@@ -95,7 +88,7 @@ public class AdquirirPlan extends JDialog {
 		setTitle("Adquirir Plan");
 		setResizable(false);
 		setModal(true);
-		setBounds(100, 100, 586, 690);
+		setBounds(100, 100, 586, 500);
 		setLocationRelativeTo(null);
 		ImageIcon logo = new ImageIcon("src/imagenes/download.jpg");
 		setIconImage(logo.getImage());
@@ -126,14 +119,14 @@ public class AdquirirPlan extends JDialog {
 			{
 				JLabel lblNewLabel_1 = new JLabel("Fecha:");
 				lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-				lblNewLabel_1.setBounds(184, 566, 56, 16);
+				lblNewLabel_1.setBounds(194, 430, 56, 16);
 				panel.add(lblNewLabel_1);
 			}
 			{
 				txtFecha = new JTextField();
 				txtFecha.setFont(new Font("Tahoma", Font.PLAIN, 12));
 				txtFecha.setEditable(false);
-				txtFecha.setBounds(228, 563, 104, 23);
+				txtFecha.setBounds(238, 427, 104, 23);
 				DateTimeFormatter fechaAper = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 				txtFecha.setText(fechaAper.format(LocalDateTime.now()));
 				panel.add(txtFecha);
@@ -146,31 +139,18 @@ public class AdquirirPlan extends JDialog {
 					auxPersona = AlticeSystem.getInstance().buscarPersonaByCedula(txtCedula.getText());
 					if(auxPersona == null) {
 						JOptionPane.showMessageDialog(null, "El cliente no esta registrado", "Error", JOptionPane.ERROR_MESSAGE);
-						txtNombre.setEditable(true);
-						txtApellido.setEditable(true);
-						txtTelefono.setEditable(true);
-						txtDireccion.setEditable(true);
-						txtNacionalidad.setEditable(true);
-						cbxGenero.setEnabled(true);
-						txtNombre.setText("");
-						txtApellido.setText("");
-						txtNacionalidad.setText("");
-						txtDireccion.setText("");
-						txtTelefono.setValue(null);
-						cbxGenero.setSelectedIndex(0);
+						RegistrarPersona regisCliente = new RegistrarPersona(null);
+						regisCliente.setVisible(true);
 					}
 					else {
 						txtNombre.setEditable(false);
 						txtApellido.setEditable(false);
-						txtTelefono.setEditable(false);
 						txtDireccion.setEditable(false);
-						txtNacionalidad.setEditable(false);
 						cbxGenero.setEnabled(false);
 						txtNombre.setText(auxPersona.getNombre());
 						txtApellido.setText(auxPersona.getApellido());
-						txtNacionalidad.setText(auxPersona.getNacionalidad());
+						//txtNacionalidad.setText(auxPersona.getNacionalidad());
 						txtDireccion.setText(auxPersona.getDireccion());
-						txtTelefono.setText(auxPersona.getTelefono());
 						if(auxPersona.getGenero().equalsIgnoreCase("Hombre")) {
 							cbxGenero.setSelectedIndex(0);
 						}
@@ -195,12 +175,6 @@ public class AdquirirPlan extends JDialog {
 			panel.add(txtNombre);
 			txtNombre.setColumns(10);
 			{
-				JLabel lblNewLabel_3 = new JLabel("Telefono:");
-				lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-				lblNewLabel_3.setBounds(10, 119, 104, 23);
-				panel.add(lblNewLabel_3);
-			}
-			{
 				MaskFormatter telefono = null;
 				try {
 					telefono = new MaskFormatter("###-###-####");
@@ -208,31 +182,25 @@ public class AdquirirPlan extends JDialog {
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
-				txtTelefono = new JFormattedTextField(telefono);
-				txtTelefono.setFont(new Font("Tahoma", Font.PLAIN, 12));
-				txtTelefono.setEditable(false);
-				txtTelefono.setBounds(10, 138, 206, 23);
-				panel.add(txtTelefono);
-				txtTelefono.setColumns(10);
 			}
 			{
 				JLabel lblNewLabel_4 = new JLabel("Direccion:");
 				lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
-				lblNewLabel_4.setBounds(10, 174, 104, 23);
+				lblNewLabel_4.setBounds(10, 130, 104, 23);
 				panel.add(lblNewLabel_4);
 			}
 			{
 				txtDireccion = new JTextField();
 				txtDireccion.setFont(new Font("Tahoma", Font.PLAIN, 12));
 				txtDireccion.setEditable(false);
-				txtDireccion.setBounds(10, 195, 533, 23);
+				txtDireccion.setBounds(10, 151, 533, 23);
 				panel.add(txtDireccion);
 				txtDireccion.setColumns(10);
 			}
 
 			JPanel panel_1 = new JPanel();
 			panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Planes", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-			panel_1.setBounds(10, 278, 533, 272);
+			panel_1.setBounds(10, 229, 533, 171);
 			panel.add(panel_1);
 			panel_1.setLayout(new BorderLayout(0, 0));
 			{
@@ -268,13 +236,13 @@ public class AdquirirPlan extends JDialog {
 
 			JLabel lblNewLabel_6 = new JLabel("Total:");
 			lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			lblNewLabel_6.setBounds(10, 557, 90, 35);
+			lblNewLabel_6.setBounds(20, 421, 90, 35);
 			panel.add(lblNewLabel_6);
 
 			txtTotal = new JTextField();
 			txtTotal.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			txtTotal.setEditable(false);
-			txtTotal.setBounds(46, 563, 104, 22);
+			txtTotal.setBounds(56, 427, 104, 22);
 			panel.add(txtTotal);
 			txtTotal.setColumns(10);
 
@@ -289,19 +257,6 @@ public class AdquirirPlan extends JDialog {
 			txtApellido.setBounds(238, 83, 206, 23);
 			panel.add(txtApellido);
 			txtApellido.setColumns(10);
-
-			JLabel lblNewLabel_7 = new JLabel("Nacionalidad:");
-			lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			lblNewLabel_7.setBounds(242, 119, 104, 23);
-			panel.add(lblNewLabel_7);
-			{
-				txtNacionalidad = new JTextField();
-				txtNacionalidad.setFont(new Font("Tahoma", Font.PLAIN, 12));
-				txtNacionalidad.setEditable(false);
-				txtNacionalidad.setBounds(238, 138, 206, 23);
-				panel.add(txtNacionalidad);
-				txtNacionalidad.setColumns(10);
-			}
 			{
 				JLabel lblNewLabel_8 = new JLabel("Genero:");
 				lblNewLabel_8.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -316,50 +271,15 @@ public class AdquirirPlan extends JDialog {
 			panel.add(cbxGenero);
 
 			JLabel lblNewLabel_9 = new JLabel("Codigo:");
-			lblNewLabel_9.setBounds(12, 245, 56, 16);
+			lblNewLabel_9.setBounds(12, 201, 56, 16);
 			panel.add(lblNewLabel_9);
 
 			txtCodigo = new JTextField();
 			txtCodigo.setEditable(false);
 			txtCodigo.setText("P-"+AlticeSystem.getInstance().getGeneradorCodigoPlanAd());
-			txtCodigo.setBounds(63, 242, 87, 22);
+			txtCodigo.setBounds(63, 198, 87, 22);
 			panel.add(txtCodigo);
 			txtCodigo.setColumns(10);
-			
-			labelNombre = new JLabel("*");
-			labelNombre.setForeground(Color.RED);
-			labelNombre.setFont(new Font("Tahoma", Font.BOLD, 13));
-			labelNombre.setBounds(222, 86, 13, 16);
-			labelNombre.setVisible(false);
-			panel.add(labelNombre);
-			
-			labelApellido = new JLabel("*");
-			labelApellido.setForeground(Color.RED);
-			labelApellido.setFont(new Font("Tahoma", Font.BOLD, 13));
-			labelApellido.setBounds(449, 86, 13, 16);
-			labelApellido.setVisible(false);
-			panel.add(labelApellido);
-			
-			labelTelefono = new JLabel("*");
-			labelTelefono.setFont(new Font("Tahoma", Font.BOLD, 13));
-			labelTelefono.setForeground(Color.RED);
-			labelTelefono.setBounds(222, 141, 13, 16);
-			labelTelefono.setVisible(false);
-			panel.add(labelTelefono);
-			
-			labelNacionalidad = new JLabel("*");
-			labelNacionalidad.setForeground(Color.RED);
-			labelNacionalidad.setFont(new Font("Tahoma", Font.BOLD, 13));
-			labelNacionalidad.setBounds(449, 141, 13, 16);
-			labelNacionalidad.setVisible(false);
-			panel.add(labelNacionalidad);
-			
-			labelDireccion = new JLabel("*");
-			labelDireccion.setForeground(Color.RED);
-			labelDireccion.setFont(new Font("Tahoma", Font.BOLD, 13));
-			labelDireccion.setBounds(545, 198, 13, 16);
-			labelDireccion.setVisible(false);
-			panel.add(labelDireccion);
 			
 			JLabel label = new JLabel("New label");
 			label.setBounds(228, 33, 56, 16);
@@ -379,13 +299,7 @@ public class AdquirirPlan extends JDialog {
 						int aux = table.getSelectedRow();
 						if(aux != -1) {
 							if(auxPersona == null) {
-								if(validarCampos()) {
-									JOptionPane.showConfirmDialog(null, "Por favor llenar los campos obligatorios", "Error", JOptionPane.WARNING_MESSAGE);
-								}
-								else {
-									auxPersona = new Cliente(txtCedula.getText(), txtNombre.getText(), txtApellido.getText(), cbxGenero.getSelectedItem().toString(), txtNacionalidad.getText(), txtDireccion.getText(), txtTelefono.getText(), "", "");
-									AlticeSystem.getInstance().insertarPersona(auxPersona);
-								}
+								JOptionPane.showMessageDialog(null, "Se debe seleccionar un cliente");
 							}
 							SimpleDateFormat fecha = new SimpleDateFormat("yyyy/MM/dd");
 							Date date1 = null;
@@ -398,7 +312,7 @@ public class AdquirirPlan extends JDialog {
 							
 							java.sql.Date date2 = new java.sql.Date(date1.getTime());
 							auxPlan.cantVentasPlan(auxPlan);
-							auxPlanAd = new PlanAdquirido(txtCedula.getText(), txtTelefono.getText(), date2, precio, auxPlan.getPrecioMensual(), txtCodigo.getText(), auxPlan);
+							auxPlanAd = new PlanAdquirido(txtCedula.getText(), "", date2, precio, auxPlan.getPrecioMensual(), txtCodigo.getText(), auxPlan);
 						
 						    ((Cliente) auxPersona).insertarPlanAd(auxPlanAd);
 							AlticeSystem.getInstance().insertarPlanAd(auxPlanAd);
@@ -432,17 +346,13 @@ public class AdquirirPlan extends JDialog {
 		txtCodigo.setText("P-"+AlticeSystem.getInstance().getGeneradorCodigoPlanAd());
 		txtNombre.setText("");
 		txtApellido.setText("");
-		txtNacionalidad.setText("");
 		txtDireccion.setText("");
-		txtTelefono.setValue(null);
 		txtCedula.setValue(null);
 		txtTotal.setText("");
 		cbxGenero.setSelectedIndex(0);
 		txtNombre.setEditable(false);
 		txtApellido.setEditable(false);
-		txtTelefono.setEditable(false);
 		txtDireccion.setEditable(false);
-		txtNacionalidad.setEditable(false);
 		cbxGenero.setEnabled(false);
 	}
 
@@ -463,51 +373,4 @@ public class AdquirirPlan extends JDialog {
 		}
 	}
 	
-	private boolean validarCampos(){
-		boolean validar = false;
-		
-		if(auxPersona == null) {
-			if(!txtTelefono.isEditValid()) {
-				labelTelefono.setVisible(true);
-				validar = true;
-			}
-			else {
-				labelTelefono.setVisible(false);
-			}
-			
-			if(txtNombre.getText().trim().isEmpty()) {
-				labelNombre.setVisible(true);
-				validar = true;
-			}
-			else {
-				labelNombre.setVisible(false);
-			}
-			
-			if(txtApellido.getText().trim().isEmpty()) {
-				labelApellido.setVisible(true);
-				validar = true;
-			}
-			else {
-				labelApellido.setVisible(false);
-			}
-			
-			if(txtNacionalidad.getText().trim().isEmpty()) {
-				labelNacionalidad.setVisible(true);
-				validar = true;
-			}
-			else {
-				labelNacionalidad.setVisible(false);
-			}
-			
-			if(txtDireccion.getText().trim().isEmpty()) {
-				labelDireccion.setVisible(true);
-				validar = true;
-			}
-			else {
-				labelDireccion.setVisible(false);
-			}
-			
-		}
-		return validar;
-	}
 }

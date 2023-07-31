@@ -10,9 +10,16 @@ public class Cliente extends Persona {
 	private ArrayList <Factura> misFacturas;
 	private ArrayList<PlanAdquirido> misPlanesAd;
 
-	public Cliente(String cedula, String nombre, String apellido, String genero, String nacionalidad, String direccion,
-			String telefono, String tipo, String codigoUsuario) {
-		super(cedula, nombre, apellido, genero, nacionalidad, direccion, telefono, tipo, codigoUsuario);
+//	public Cliente(String cedula, String nombre, String apellido, String genero, String nacionalidad, String direccion,
+//			String telefono, String tipo, String codigoUsuario) {
+//		super(cedula, nombre, apellido, genero, nacionalidad, direccion, telefono, tipo, codigoUsuario);
+//		this.misPlanesAd = new ArrayList<PlanAdquirido>();
+//		this.misFacturas = new ArrayList<Factura>();
+//	}
+
+	public Cliente(String cedula, String nombre, String apellido, String snombre, String sapellido, String genero,
+			String telefono, String ciudadNacim, String calle, String numCasa, String direccion) {
+		super(cedula, nombre, apellido, snombre, sapellido, genero, telefono, ciudadNacim, calle, numCasa, direccion);
 		this.misPlanesAd = new ArrayList<PlanAdquirido>();
 		this.misFacturas = new ArrayList<Factura>();
 	}
@@ -20,6 +27,7 @@ public class Cliente extends Persona {
 	public ArrayList<Factura> getMisFacturas() {
 		return misFacturas;
 	}
+	
 	
 	public ArrayList<PlanAdquirido> getMisPlanesAd() {
 		return misPlanesAd;

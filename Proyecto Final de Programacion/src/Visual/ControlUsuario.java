@@ -28,6 +28,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 
+import SqlDB.ConexionDB;
+import SqlDB.SQLInsert;
 import logico.P_Administrador;
 import logico.AlticeSystem;
 import logico.Cliente;
@@ -39,6 +41,7 @@ import logico.PlanAdquirido;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
 import java.sql.Date;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -99,6 +102,7 @@ public class ControlUsuario extends JDialog {
 	private JButton btnSusp;
 	private JRadioButton rbtGeneral;
 	private JRadioButton rbtPersonal;
+	Connection conn = ConexionDB.getConnection();
 	/**
 	 * Launch the application.
 	 */
@@ -160,7 +164,7 @@ public class ControlUsuario extends JDialog {
 				txtNombre.setText(auxPersona.getNombre());
 				txtApellido.setText(auxPersona.getApellido());
 				txtDireccion.setText(auxPersona.getDireccion());
-				txtNacionalidad.setText(auxPersona.getNacionalidad());
+				//txtNacionalidad.setText(auxPersona.getNacionalidad());
 				txtTelefono.setText(auxPersona.getTelefono());
 				txtGenero.setText(auxPersona.getGenero());
 				if(auxPersona instanceof P_Trabajador) {
@@ -467,7 +471,7 @@ public class ControlUsuario extends JDialog {
 				txtApellido.setText(auxPersona.getApellido());
 				txtNombre.setText(auxPersona.getNombre());
 				txtDireccion.setText(auxPersona.getDireccion());
-				txtNacionalidad.setText(auxPersona.getNacionalidad());
+				//txtNacionalidad.setText(auxPersona.getNacionalidad());
 				txtTelefono.setText(auxPersona.getTelefono());
 				txtGenero.setText(auxPersona.getGenero());
 				if(auxPersona instanceof P_Trabajador) {
@@ -558,9 +562,11 @@ public class ControlUsuario extends JDialog {
 		panelNav.add(btnModificar);
 		panelSystem.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{panelNav, btnVer, btnEliminar, btnNewButton_1, panelHead, txtBuscar, btnBuscar, panelInfo, scrollPane_1, tableInfo, panel, txtCedula, txtNombre, txtTelefono, lblNewLabel_3, lblNewLabel_4, lblNewLabel_5, txtDireccion, lblNewLabel_6, lblNewLabel_7, txtNacionalidad, lblNewLabel_8, lblCargo, panel_1, panel_2}));
 
-		btnCerrar = new JButton("Cerrar");
+		btnCerrar = new JButton("Cerrar y guardar");
 		btnCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				SQLInsert sqlIn = new SQLInsert();
+				sqlIn.insertar(conn);
 				dispose();
 			}
 		});

@@ -11,9 +11,11 @@ public class P_Trabajador extends Persona{
 	private float salario;
 	private int cantHorasTXmes;
 
-	public P_Trabajador(String cedula, String nombre, String apellido, String genero, String nacionalidad,
-			String direccion, String telefono, String tipo, String codigoUsuario) {
-		super(cedula, nombre, apellido, genero, nacionalidad, direccion, telefono, tipo, codigoUsuario);
+
+
+	public P_Trabajador(String cedula, String nombre, String apellido, String snombre, String sapellido, String genero,
+			String telefono, String ciudadNacim, String calle, String numCasa, String direccion) {
+		super(cedula, nombre, apellido, snombre, sapellido, genero, telefono, ciudadNacim, calle, numCasa, direccion);
 		this.actividades = new ArrayList<String>();
 		this.puntosGanados = 0;
 		this.cuenta = null;

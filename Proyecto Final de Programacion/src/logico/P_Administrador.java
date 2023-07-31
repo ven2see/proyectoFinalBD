@@ -14,9 +14,11 @@ public class P_Administrador extends Persona {
 	private int puntosGanados;
 	private int gradoPermiso; // 1 o 2
 
-	public P_Administrador(String cedula, String nombre, String apellido, String genero, String nacionalidad,
-			String direccion, String telefono, String tipo, String codigoUsuario) {
-		super(cedula, nombre, apellido, genero, nacionalidad, direccion, telefono, tipo, codigoUsuario);
+
+
+	public P_Administrador(String cedula, String nombre, String apellido, String snombre, String sapellido,
+			String genero, String telefono, String ciudadNacim, String calle, String numCasa, String direccion) {
+		super(cedula, nombre, apellido, snombre, sapellido, genero, telefono, ciudadNacim, calle, numCasa, direccion);
 		this.actividades = new ArrayList<String>();
 		this.puntosGanados=0;
 		this.gradoPermiso = 1;

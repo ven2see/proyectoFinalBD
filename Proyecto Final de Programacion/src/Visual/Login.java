@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.border.TitledBorder;
 
+import SqlDB.ConexionDB;
 import SqlDB.LlenarLista;
 import logico.AlticeSystem;
 import logico.Cuenta;
@@ -39,6 +40,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.sql.Connection;
 
 public class Login extends JFrame {
 
@@ -56,10 +58,11 @@ public class Login extends JFrame {
 	
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-		
+	            Connection conn = ConexionDB.getConnection();
 				LlenarLista listar = new LlenarLista();
-				listar.listar();
-				
+
+	            System.out.println( AlticeSystem.getInstance().getMisPersonas().size());
+				listar.listar(conn);
 				try {
 					Login frame = new Login();
 					frame.setVisible(true);
