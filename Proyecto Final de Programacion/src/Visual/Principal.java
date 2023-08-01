@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Connection;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import java.awt.SystemColor;
@@ -96,7 +97,7 @@ public class Principal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Principal frame = new Principal();
+					Principal frame = new Principal(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -108,7 +109,7 @@ public class Principal extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Principal() {
+	public Principal(Connection conn) {
 		setTitle("Altice");
 		AlticeSystem.getInstance().generarFacturaPorFecha();
 
@@ -131,7 +132,7 @@ public class Principal extends JFrame {
 		menuItemControlUsuario = new JMenuItem("Control usuario");
 		menuItemControlUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ControlUsuario vistaU = new ControlUsuario();
+				ControlUsuario vistaU = new ControlUsuario(conn);
 				vistaU.setVisible(true);
 				cantSistema();
 				//	txtMostrarUsuario.setText(txtCedula.getText());
@@ -143,7 +144,7 @@ public class Principal extends JFrame {
 		menuItemRegUsuario = new JMenuItem("Registrar usuario");
 		menuItemRegUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RegistrarPersona regis = new RegistrarPersona(null);
+				RegistrarPersona regis = new RegistrarPersona(null,conn);
 				regis.setVisible(true);
 				cantSistema();
 			}
@@ -166,7 +167,7 @@ public class Principal extends JFrame {
 		menuItemAdPlan = new JMenuItem("Adquirir Plan");
 		menuItemAdPlan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AdquirirPlan planAd = new AdquirirPlan();
+				AdquirirPlan planAd = new AdquirirPlan(conn);
 				planAd.setVisible(true);
 				cantSistema();
 			}
@@ -251,7 +252,7 @@ public class Principal extends JFrame {
 		JButton btnClientes = new JButton("Revisar Clientes");
 		btnClientes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ControlUsuario vistaU = new ControlUsuario();
+				ControlUsuario vistaU = new ControlUsuario(conn);
 				vistaU.setVisible(true);
 				cantSistema();
 			}
@@ -289,7 +290,7 @@ public class Principal extends JFrame {
 		btnTrabajador = new JButton("Revisar Trabajadores");
 		btnTrabajador.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ControlUsuario vistaU = new ControlUsuario();
+				ControlUsuario vistaU = new ControlUsuario(conn);
 				vistaU.setVisible(true);
 				cantSistema();
 			}
@@ -327,7 +328,7 @@ public class Principal extends JFrame {
 		btnAdmin = new JButton("Revisar Administradores");
 		btnAdmin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ControlUsuario vistaU = new ControlUsuario();
+				ControlUsuario vistaU = new ControlUsuario(conn);
 				vistaU.setVisible(true);
 				cantSistema();
 			}
@@ -365,7 +366,7 @@ public class Principal extends JFrame {
 		btnFacturas = new JButton("Revisar Facturas");
 		btnFacturas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ControlUsuario vistaU = new ControlUsuario();
+				ControlUsuario vistaU = new ControlUsuario(conn);
 				vistaU.setVisible(true);
 				cantSistema();
 			}

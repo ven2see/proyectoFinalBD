@@ -17,7 +17,7 @@ public class P_Administrador extends Persona {
 
 
 	public P_Administrador(String cedula, String nombre, String apellido, String snombre, String sapellido,
-			String genero, String telefono, String ciudadNacim, String calle, String numCasa, String direccion) {
+			String genero, String telefono, int ciudadNacim, String calle, String numCasa, String direccion) {
 		super(cedula, nombre, apellido, snombre, sapellido, genero, telefono, ciudadNacim, calle, numCasa, direccion);
 		this.actividades = new ArrayList<String>();
 		this.puntosGanados=0;

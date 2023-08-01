@@ -14,7 +14,6 @@ public class ConexionDB {
 			String url = "jdbc:sqlserver://192.168.100.118" + ":1433;DatabaseName=Altice_group_5" + ";encrypt=true;trustServerCertificate=true";
 			conn = DriverManager.getConnection(url,"dernest","DdE200004@@");
 
-			JOptionPane.showMessageDialog(null,"La conexión ha sido exitosa.");
 		}catch (Exception e) {
 			conn=null;
 			JOptionPane.showMessageDialog(null,"No hemos podido establecer una conexión con el servido "+e);
@@ -25,7 +24,7 @@ public class ConexionDB {
 
 		Connection prueba = ConexionDB.getConnection();
 		if(prueba!=null) {
-			JOptionPane.showMessageDialog(null,"Conexión encontrada!");
+			//JOptionPane.showMessageDialog(null,"Conexión encontrada!");
 		}
 
 	}

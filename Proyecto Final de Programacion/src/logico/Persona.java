@@ -12,7 +12,7 @@ public class Persona implements Serializable{
 	protected String Sapellido;
 	protected String genero;
 	protected String telefono;
-	protected String ciudadNacim;
+	protected int ciudadNacim;
 	protected String calle;
 	protected String numCasa;
 	protected String direccion;
@@ -26,7 +26,7 @@ public class Persona implements Serializable{
 	 */
 	
 	public Persona(String cedula, String nombre, String apellido, String snombre, String sapellido, String genero,
-			String telefono, String ciudadNacim, String calle, String numCasa, String direccion) {
+			String telefono, int ciudadNacim, String calle, String numCasa, String direccion) {
 		super();
 		this.cedula = cedula;
 		this.nombre = nombre;
@@ -113,12 +113,12 @@ public class Persona implements Serializable{
 	}
 
 
-	public String getCiudadNacim() {
+	public int getCiudadNacim() {
 		return ciudadNacim;
 	}
 
 
-	public void setCiudadNacim(String ciudadNacim) {
+	public void setCiudadNacim(int ciudadNacim) {
 		this.ciudadNacim = ciudadNacim;
 	}
 

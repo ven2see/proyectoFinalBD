@@ -14,7 +14,7 @@ public class P_Trabajador extends Persona{
 
 
 	public P_Trabajador(String cedula, String nombre, String apellido, String snombre, String sapellido, String genero,
-			String telefono, String ciudadNacim, String calle, String numCasa, String direccion) {
+			String telefono, int ciudadNacim, String calle, String numCasa, String direccion) {
 		super(cedula, nombre, apellido, snombre, sapellido, genero, telefono, ciudadNacim, calle, numCasa, direccion);
 		this.actividades = new ArrayList<String>();
 		this.puntosGanados = 0;

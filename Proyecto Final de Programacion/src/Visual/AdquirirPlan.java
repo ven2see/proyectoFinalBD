@@ -47,6 +47,7 @@ import javax.swing.ImageIcon;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
 
 public class AdquirirPlan extends JDialog {
 
@@ -72,7 +73,7 @@ public class AdquirirPlan extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			AdquirirPlan dialog = new AdquirirPlan();
+			AdquirirPlan dialog = new AdquirirPlan(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -84,7 +85,7 @@ public class AdquirirPlan extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public AdquirirPlan() {
+	public AdquirirPlan(Connection conn) {
 		setTitle("Adquirir Plan");
 		setResizable(false);
 		setModal(true);
@@ -139,7 +140,7 @@ public class AdquirirPlan extends JDialog {
 					auxPersona = AlticeSystem.getInstance().buscarPersonaByCedula(txtCedula.getText());
 					if(auxPersona == null) {
 						JOptionPane.showMessageDialog(null, "El cliente no esta registrado", "Error", JOptionPane.ERROR_MESSAGE);
-						RegistrarPersona regisCliente = new RegistrarPersona(null);
+						RegistrarPersona regisCliente = new RegistrarPersona(null,conn);
 						regisCliente.setVisible(true);
 					}
 					else {

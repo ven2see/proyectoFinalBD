@@ -51,6 +51,7 @@ public class Login extends JFrame {
 	private JLabel labelVer;
 	private JLabel labelNover;
 	private JLabel labelFondo;
+    static Connection conn = ConexionDB.getConnection();
 	/**
 	 * Launch the application.
 	 */
@@ -58,7 +59,6 @@ public class Login extends JFrame {
 	
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-	            Connection conn = ConexionDB.getConnection();
 				LlenarLista listar = new LlenarLista();
 
 	            System.out.println( AlticeSystem.getInstance().getMisPersonas().size());
@@ -169,12 +169,12 @@ public class Login extends JFrame {
 				boolean confirmar = AlticeSystem.getInstance().confirmarLogin(txtUsuario.getText(), password);
 				if(confirmar) {
 					if(AlticeSystem.getLoginUser() instanceof P_Administrador) {
-						Principal admin = new Principal();
+						Principal admin = new Principal(conn);
 						dispose();
 						admin.setVisible(true);
 					}
 					else if(AlticeSystem.getLoginUser() instanceof P_Trabajador) {
-						Principal trabajador = new Principal();
+						Principal trabajador = new Principal(conn);
 						dispose();
 						trabajador.setVisible(true);
 					}

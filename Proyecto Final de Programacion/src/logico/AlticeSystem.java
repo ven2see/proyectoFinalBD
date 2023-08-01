@@ -28,6 +28,8 @@ public class AlticeSystem implements Serializable{
 	private ArrayList<Persona> misPersonas;
 	private ArrayList<Cuenta> misCuentas;
 	private ArrayList<PlanAdquirido> misPlanesAd;
+	private ArrayList<Ciudad> ciudades;
+	private ArrayList<Pais> paises;
 	private int generadorCodigoPlanAd = 1;
 	public static AlticeSystem ALS = null;
 	private int genFac;
@@ -43,6 +45,8 @@ public class AlticeSystem implements Serializable{
 		this.misFacturas = new ArrayList<Factura>();
 		this.misPersonas = new ArrayList<Persona>();
 		this.misCuentas = new ArrayList<Cuenta>();
+		this.ciudades = new ArrayList<Ciudad>();
+		this.paises = new ArrayList<Pais>();
 		this.genFac = 1;
 	}
 
@@ -107,7 +111,7 @@ public class AlticeSystem implements Serializable{
 	public void insertarPlan(Plan auxPlan) {
 		misPlanes.add(auxPlan);
 		
-        String consulta ="insert into Planes (id_plan, nombrePlan, cantCanales, velocidadInternet, cantMin, estado, precioInicial, precioMensual) values (?,?,?,?,?,?,?,?);";
+        String consulta ="insert into [Plan] (id_plan, nombrePlan, cantCanales, velocidadInternet, cantMin, estado, precioInicial, precioMensual) values (?,?,?,?,?,?,?,?);";
 		 
 		 try {
 			 
@@ -171,7 +175,6 @@ public class AlticeSystem implements Serializable{
 		 } catch(Exception e){
 			 JOptionPane.showMessageDialog(null, e.toString());
 		 }
-	}
 	}
 
 	public PlanAdquirido buscarPlanEnCliente(Persona cli,String code) {
@@ -499,6 +502,10 @@ public class AlticeSystem implements Serializable{
 		return suma;
 	}
 
+	public void addCiudad(Ciudad ciud) {
+		ciudades.add(ciud);
+		System.out.println(ciudades.size());
+	}
 	public float cantDineroGenerado() {
 
 		float total = 0;
@@ -539,9 +546,54 @@ public class AlticeSystem implements Serializable{
 		  total = 0; 
 	   } 
 	} 
+	
 
 	public void supender(PlanAdquirido pl) {
 		pl.setSwitch1("Supendido");
 	}
+	
+	public Ciudad buscarCiudad(int ind) {
+		Ciudad ciud = null;
+		boolean encontrado = false;
+		int i =0;
+		while(!encontrado && i<ciudades.size()) {
+			if(ciudades.get(i)==ciudades.get(ind)) {
+				ciud = ciudades.get(i);
+			}
+		}
+		return ciud;
+	}
+	
+
+	
+	public ArrayList<Ciudad> getCiudades() {
+		return ciudades;
+	}
+
+	public void setCiudades(ArrayList<Ciudad> ciudades) {
+		this.ciudades = ciudades;
+	}
+
+	public ArrayList<Pais> getPaises() {
+		return paises;
+	}
+
+	public void setPaises(ArrayList<Pais> paises) {
+		this.paises = paises;
+	}
+
+	public int buscarCiudadBYCODE(String code) {
+		int ind =0;
+		
+		for(int i=0; i<getCiudades().size(); i++) {
+			Ciudad ciud = getCiudades().get(i);
+			if(ciud.getIDCiudad().equalsIgnoreCase(code)) {
+				ind = i;
+			}
+		}
+		
+		return ind;
+	}
+	
 }
 

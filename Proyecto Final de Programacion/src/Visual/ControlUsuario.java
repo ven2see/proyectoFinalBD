@@ -102,7 +102,6 @@ public class ControlUsuario extends JDialog {
 	private JButton btnSusp;
 	private JRadioButton rbtGeneral;
 	private JRadioButton rbtPersonal;
-	Connection conn = ConexionDB.getConnection();
 	/**
 	 * Launch the application.
 	 */
@@ -110,7 +109,7 @@ public class ControlUsuario extends JDialog {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ControlUsuario frame = new ControlUsuario();
+					ControlUsuario frame = new ControlUsuario(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -122,7 +121,7 @@ public class ControlUsuario extends JDialog {
 	/**
 	 * Create the frame.
 	 */
-	public ControlUsuario() {
+	public ControlUsuario(Connection conn) {
 		setModal(true);
 		setResizable(false);
 		setTitle("Control Usuario");
@@ -527,7 +526,7 @@ public class ControlUsuario extends JDialog {
 		}
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RegistrarPersona addPersona = new RegistrarPersona(null);
+				RegistrarPersona addPersona = new RegistrarPersona(null,conn);
 				addPersona.setVisible(true);
 				addPersona.setModal(true);
 				loadPersonasByTipo(0);
@@ -548,7 +547,7 @@ public class ControlUsuario extends JDialog {
 					auxPersona = AlticeSystem.getInstance().buscarPersonaByCedula(codigo);
 				}
 				if(auxPersona != null) {
-					RegistrarPersona user = new RegistrarPersona(auxPersona);
+					RegistrarPersona user = new RegistrarPersona(auxPersona,conn);
 					user.setVisible(true);
 					loadPersonasByTipo(0);
 					clean();
