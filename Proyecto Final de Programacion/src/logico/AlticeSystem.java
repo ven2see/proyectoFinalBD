@@ -3,6 +3,7 @@ package logico;
 import java.awt.Component;
 import java.io.Serializable;
 import java.security.*;
+import java.sql.CallableStatement;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 import javax.swing.text.MaskFormatter;
 
+import SqlDB.ConexionDB;
 import Visual.ReportePlan;
 
 public class AlticeSystem implements Serializable{
@@ -104,6 +106,28 @@ public class AlticeSystem implements Serializable{
 
 	public void insertarPlan(Plan auxPlan) {
 		misPlanes.add(auxPlan);
+		
+        String consulta ="insert into Planes (id_plan, nombrePlan, cantCanales, velocidadInternet, cantMin, estado, precioInicial, precioMensual) values (?,?,?,?,?,?,?,?);";
+		 
+		 try {
+			 
+			 CallableStatement cs = ConexionDB.getConnection().prepareCall(consulta);
+			 
+			 cs.setString(1, auxPlan.getId());
+			 cs.setString(2, auxPlan.getNombre());
+			 cs.setInt(3, Integer.parseInt(auxPlan.getCantCanales()));
+			 cs.setInt(4, Integer.parseInt(auxPlan.getCantInternet()));
+			 cs.setInt(5, Integer.parseInt(auxPlan.getCantMinutos()));
+			 cs.setInt(6, 1);
+		     cs.setFloat(7, auxPlan.getPrecioInicial());
+		     cs.setFloat(8, auxPlan.getPrecioMensual());
+		        
+		     cs.execute();
+		     
+		 } catch(Exception e){
+			 JOptionPane.showMessageDialog(null, e.toString());
+		 }
+		
 	}
 
 	public void insertarPlanAd(PlanAdquirido auxPlanAd) {
@@ -124,6 +148,30 @@ public class AlticeSystem implements Serializable{
 			misPlanes.get(ind).setPrecioInicial(auxPlan.getPrecioInicial());
 			misPlanes.get(ind).setPrecioMensual(auxPlan.getPrecioMensual());
 		}
+		
+        String consulta = "UPDATE Planes SET Planes.nombrePlan = ?, Planes.cantCanales =?, Planes.velocidadInternet =?, Planes.cantMin = ?, Planes.estado = ?, Planes.precioInicial = ?, Planes.precioMensual WHERE Planes.id_plan=?;";
+        
+        try {
+			 
+			 CallableStatement cs = ConexionDB.getConnection().prepareCall(consulta);
+			 
+			 cs.setString(1, auxPlan.getNombre());
+			 cs.setInt(2, Integer.parseInt(auxPlan.getCantCanales()));
+			 cs.setInt(3, Integer.parseInt(auxPlan.getCantInternet()));
+			 cs.setInt(4, Integer.parseInt(auxPlan.getCantMinutos()));
+			 cs.setInt(5, 1);
+		     cs.setFloat(6, auxPlan.getPrecioInicial());
+		     cs.setFloat(7, auxPlan.getPrecioMensual());
+		     cs.setString(8, auxPlan.getId());
+		        
+		     cs.execute();
+		     
+		     JOptionPane.showMessageDialog(null,"Modificación Exitosa");
+		     
+		 } catch(Exception e){
+			 JOptionPane.showMessageDialog(null, e.toString());
+		 }
+	}
 	}
 
 	public PlanAdquirido buscarPlanEnCliente(Persona cli,String code) {

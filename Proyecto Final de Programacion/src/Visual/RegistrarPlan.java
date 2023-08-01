@@ -50,6 +50,7 @@ public class RegistrarPlan extends JDialog {
 	private JCheckBox chxVelocidad;
 	private JCheckBox chxMinutos;
 	private JCheckBox chxCanales;
+	private JTextField txtId;
 
 	/**
 	 * Launch the application.
@@ -169,6 +170,18 @@ public class RegistrarPlan extends JDialog {
 		labelNombre.setVisible(false);
 		labelNombre.setBounds(324, 34, 56, 16);
 		panelInfo.add(labelNombre);
+		
+		JLabel lblNewLabel_6 = new JLabel("Id:");
+		lblNewLabel_6.setBounds(365, 36, 45, 13);
+		panelInfo.add(lblNewLabel_6);
+		
+		txtId = new JTextField();
+		if(auxPlan != null) {
+			txtId.setText(auxPlan.getId());
+		}
+		txtId.setBounds(385, 33, 96, 19);
+		panelInfo.add(txtId);
+		txtId.setColumns(10);
 		{
 			JPanel panelTipo = new JPanel();
 			panelTipo.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Servicios", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -346,7 +359,7 @@ public class RegistrarPlan extends JDialog {
 									String nom = txtNombre.getText();
 									float precioIni = Float.valueOf(txtPrecioInicial.getText());
 									float precioM = Float.valueOf(txtPrecioMensual.getText());
-									p1 = new Plan(nom, txtCanales.getText(), txtMinutos.getText(), txtVelocidad.getText(), precioIni, precioM, "Habilitado");
+									p1 = new Plan(txtId.getText(),nom, txtCanales.getText(), txtMinutos.getText(), txtVelocidad.getText(), precioIni, precioM, "Habilitado");
 									AlticeSystem.getInstance().insertarPlan(p1);
 									JOptionPane.showMessageDialog(null, "Registro Exitoso", "Informacion", JOptionPane.INFORMATION_MESSAGE);
 									clean();
@@ -392,6 +405,7 @@ public class RegistrarPlan extends JDialog {
 		}
 	}
 	private void clean() {
+		txtId.setText("");
 	    txtPrecioInicial.setText("");
 		txtPrecioMensual.setText("");
 		txtVelocidad.setText("");

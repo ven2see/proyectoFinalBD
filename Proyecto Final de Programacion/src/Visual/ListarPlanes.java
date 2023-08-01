@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import SqlDB.ConexionDB;
 import logico.AlticeSystem;
 import logico.Plan;
 
@@ -31,11 +32,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class ListarPlanes extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private JTextField txtNombre;
 	private JTable table;
 	private static DefaultTableModel model;
 	private static Object[] rows;
@@ -74,38 +76,9 @@ public class ListarPlanes extends JDialog {
 		getContentPane().add(contentPanel);
 		contentPanel.setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panel.setBounds(6, 13, 702, 80);
-		contentPanel.add(panel);
-		panel.setLayout(null);
-		
-		JLabel lblNewLabel = new JLabel("Nombre:");
-		lblNewLabel.setBounds(10, 20, 56, 16);
-		panel.add(lblNewLabel);
-		
-		txtNombre = new JTextField();
-		txtNombre.setBounds(10, 40, 206, 23);
-		panel.add(txtNombre);
-		txtNombre.setColumns(10);
-		
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				plan = AlticeSystem.getInstance().buscarPlanByNomb(txtNombre.getText());
-				if(plan == null) {
-					JOptionPane.showMessageDialog(null, "Plan No Esta Registrado", "Error", JOptionPane.ERROR_MESSAGE);
-				}
-				loadPlanes(plan);
-			}
-		});
-		btnBuscar.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		btnBuscar.setBounds(226, 40, 66, 20);
-		panel.add(btnBuscar);
-		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(6, 97, 702, 299);
+		panel_1.setBounds(6, 10, 702, 386);
 		contentPanel.add(panel_1);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
@@ -115,7 +88,7 @@ public class ListarPlanes extends JDialog {
 		
 		table = new JTable();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		String[] headers = {"Nombre","Internet","Minutos", "Canales", "Costo", "Mensual", "Estado"};
+		String[] headers = {"Id", "Nombre","Canales", "Internet","Minutos",  "Estado", "Costo", "Mensual"};
 		model = new DefaultTableModel();
 		model.setColumnIdentifiers(headers);
 		table.setModel(model);
@@ -125,9 +98,27 @@ public class ListarPlanes extends JDialog {
 				int aux = table.getSelectedRow();
 				if(aux != -1) {
 					btnModificar.setEnabled(true);
-					btnDeshabilitar.setEnabled(true);
-					String nombre = (String) table.getValueAt(aux, 0);
-					auxPlan = AlticeSystem.getInstance().buscarPlanByNomb(nombre);
+					//btnDeshabilitar.setEnabled(true);
+					String id = (String) table.getValueAt(aux, 0);
+					String nombres = (String) table.getValueAt(aux, 1);
+					String canales = (String) table.getValueAt(aux, 2);
+					String internet = (String) table.getValueAt(aux, 3);
+					String minutos = (String) table.getValueAt(aux, 4);
+					float costo = 0;
+					float mensual = 0;
+					
+					try {
+						costo = Float.parseFloat ((String) table.getValueAt(aux, 6));
+						mensual = Float.parseFloat ((String) table.getValueAt(aux, 7));
+
+					} catch (NumberFormatException nfe) {
+						// Muestra un mensaje de error o maneja la excepción de la manera que consideres más adecuada
+						System.out.println("Error al convertir los valores de la tabla a enteros");
+					}
+					
+					if(auxPlan == null) {
+						auxPlan = new Plan(id, nombres, canales, minutos, internet, costo, mensual, "");
+					}
 				}
 			}
 		});
@@ -146,7 +137,7 @@ public class ListarPlanes extends JDialog {
 						if(auxPlan != null) {
 							RegistrarPlan regPlan = new RegistrarPlan(auxPlan);
 							regPlan.setVisible(true);
-							loadPlanes(null);
+							loadPlanes();
 						}
 					}
 				});
@@ -159,7 +150,7 @@ public class ListarPlanes extends JDialog {
 					public void actionPerformed(ActionEvent e) {
 						if(auxPlan != null) {
 							auxPlan.setEstado("Deshabilitado");
-							loadPlanes(null);
+							loadPlanes();
 						}
 					}
 				});
@@ -179,34 +170,39 @@ public class ListarPlanes extends JDialog {
 				buttonPane.add(btnCancelar);
 			}
 		}
-		loadPlanes(null);
+		loadPlanes();
 	}
-	private void loadPlanes(Plan auxPlan) {
+	
+	private void loadPlanes() {
 		model.setRowCount(0);
 		rows = new Object[model.getColumnCount()];
-		if(auxPlan == null) {
-			for(int i = 0; i < AlticeSystem.getInstance().getMisPlanes().size(); i++) {
-				rows[0] = AlticeSystem.getInstance().getMisPlanes().get(i).getNombre();
-				rows[1] = AlticeSystem.getInstance().getMisPlanes().get(i).getCantInternet();
-				rows[2] = AlticeSystem.getInstance().getMisPlanes().get(i).getCantMinutos();
-				rows[3] = AlticeSystem.getInstance().getMisPlanes().get(i).getCantCanales();
-				rows[4] = AlticeSystem.getInstance().getMisPlanes().get(i).getPrecioInicial();
-				rows[5] = AlticeSystem.getInstance().getMisPlanes().get(i).getPrecioMensual();
-				rows[6] = AlticeSystem.getInstance().getMisPlanes().get(i).getEstado();
-				model.addRow(rows);
-			}
-		}
-		else {
-			rows[0] = auxPlan.getNombre();
-			rows[1] = auxPlan.getCantInternet();
-			rows[2] = auxPlan.getCantMinutos();
-			rows[3] = auxPlan.getCantCanales();
-			rows[4] = auxPlan.getPrecioInicial();
-			rows[5] = auxPlan.getPrecioMensual();
-			rows[6] = auxPlan.getEstado();
-			model.addRow(rows);
-		}
+		String sql ="select * from Planes;";
+		String[] datos = new String[8];
+	    Statement st;
+	    
+	    
+	    try {
+	    	st= ConexionDB.getConnection().createStatement();
+	    	
+	    	ResultSet rs = st.executeQuery(sql);
+	    	
+	    	 while(rs.next()){
+	             
+	                datos[0]=rs.getString(1);
+	                datos[1]=rs.getString(2);
+	                datos[2]=rs.getString(3);
+	                datos[3]=rs.getString(4);
+	                datos[4]=rs.getString(5);
+	                datos[5]=rs.getString(6);
+	                datos[6]=rs.getString(7);
+	                datos[7]=rs.getString(8);
+	                
+	                model.addRow(datos);
+	           }
+	    }
+	    catch(Exception e){
+	    	JOptionPane.showMessageDialog(null,"No se pudo mostrar los registros, error: "+ e.toString());
+	    }
 		btnModificar.setEnabled(false);
-		btnDeshabilitar.setEnabled(false);
 	}
 }

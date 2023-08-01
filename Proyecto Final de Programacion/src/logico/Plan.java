@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Plan implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+	private String id;
 	private String nombre;
 	private String cantCanales;
 	private String cantMinutos;
@@ -15,9 +16,10 @@ public class Plan implements Serializable{
     private float dineroGenerado;
     private int cantVentas = 0;
 
-	public Plan(String nombre, String cantCanales, String cantMinutos, String cantInternet,
+	public Plan( String id, String nombre, String cantCanales, String cantMinutos, String cantInternet,
 			float precioInicial, float precioMensual, String estado) {
 		super();
+		this.id = id;
 		this.nombre = nombre;
 		this.cantCanales = cantCanales;
 		this.cantMinutos = cantMinutos;
@@ -27,6 +29,19 @@ public class Plan implements Serializable{
 		this.estado = estado;
 		this.dineroGenerado = 0;
 	}
+
+	
+	
+	public String getId() {
+		return id;
+	}
+
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+
 
 	public String getEstado() {
 		return estado;
